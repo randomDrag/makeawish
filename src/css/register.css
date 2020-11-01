@@ -1,0 +1,12 @@
+
+.card-box1{
+    width: 300px;
+    height: 350px;
+    background-color: #F1D4D4;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    flex-direction: column;
+}

@@ -1,9 +1,12 @@
 body{
+
     background-color: #6A097D;
 }
 
 .home-title{
-    height: 100%;
+    position: absolute;
+    top: 10%
+    
 }
 .home-title h1{
 
@@ -46,4 +49,109 @@ body{
     width: 400px;
   
   
+}
+
+
+.wish-card{
+    width: 250px;
+    height: 350px;
+    background-color: #F1D4D4;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.wish-card h6 {
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 40px auto;
+    color: #6A097D;
+}
+
+/* this is 1 col of section1 */
+.col1{
+height: 90vh;
+z-index: 1;
+position: relative;
+}
+
+
+
+
+
+
+/* mobile devices setting */
+
+
+@media (max-width: 575.98px) { 
+
+/* background logo of section1 */
+
+    .background-stuff{
+      
+       top: 10%;
+        left: auto;
+        right: auto;
+    }
+    
+    .background-stuff div{
+    
+       
+        height: 250px;
+        width: 250px;
+        border-radius: 80%;
+        background-color: #C060A1;
+    }
+    
+    .background-stuff img{
+    
+        
+        height: 200px;
+        width: 200px;
+      
+      
+    }
+
+    /* title of col 1 */
+
+    .home-title{
+        top: 20%;
+    }
+
+    .home-title h1{
+
+       font-size: 1rem;
+       text-align: center;
+    
+    }
+
+    .home-title p{
+
+        font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    font-weight: 400;
+     font-size: .9rem;
+        color:#F1D4D4
+    
+    }
+
+
+    /* this is 1 col of section1  for mobile*/
+    .col1{
+         height: 28vh;
+
+    }
+
+    /* card for submition */
+
+    .wish-card{
+        position: relative;
+
+        z-index: 1;
+    }
 }

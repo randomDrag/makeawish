@@ -1,0 +1,202 @@
+
+    
+      
+    
+     
+      
+      .navbar-brand{
+          font-size: 1.7rem;
+        font-weight: bold;
+        margin-left: 1rem;
+        color: #F1D4D4;
+      }
+     
+    
+      .nav-des{
+        display: inline-flex;
+        text-transform: uppercase;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        color: #F1D4D4;
+        align-items: center;
+        justify-content: center;
+       
+     
+      }
+
+      .nav-des img{
+        width: 50px;
+        height: 50px;
+      
+        margin: 0 1rem;
+        align-self: center;
+        justify-self: center;
+        
+      }
+      
+ .nav-item {
+          padding: 0 18px;
+          
+        }
+        .nav-item:hover{
+            text-decoration: none;
+          
+        }
+        .nav-link{
+            text-decoration: none;
+            color: white;
+          font-size: 1rem;
+          font-family: 'Montserrat', sans-serif;
+        }
+        .nav-link:hover{
+          color: black;
+         text-decoration: none;
+          transition: all ease 1s;
+      }
+      
+    
+        .h6{
+          font-weight: bold;
+          text-align: start;
+          padding: 5px 0;
+      }
+      
+      .all{
+        margin: 0 30%;
+      }
+  
+  
+  .navMode{
+  
+    position: sticky;
+    top: 0;
+  }
+  
+  
+  
+  
+  .box{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
+    right: 20px;
+   
+  }
+  
+  
+
+  .opt{
+  text-decoration: none;
+    color: #F1D4D4;
+    font-family: 'Montserrat', sans-serif;
+   font-weight: 400;
+   
+  }
+ 
+  
+  .opt:link {
+      text-decoration: none;
+  }
+ 
+  .opt:hover {
+    text-decoration: none;
+}
+  
+  .mbar{
+  display: block;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  margin: 30px 10px ;
+  text-align: center;
+  padding: 10px 25px;
+  background-color: black;
+  border: 2px solid black;
+  font-size: 1.5rem;
+  font-weight: 400;
+  border-radius: 80px;
+  box-shadow: 0 8px #999;
+  width: 250px;
+  
+  }
+  .mbar:hover{
+    background-color: white;
+    transform: translateY(4px);
+    box-shadow: none;
+    text-decoration: none;
+    transition: all ease-in 2s;
+    color: black;
+  
+    }
+  .mbar:active{
+    transform: translateY(4px);
+    box-shadow: none;
+    translate: all .5 ease;
+  }
+  
+    .close-btn{
+  
+      border: "2px solid red";
+      position: absolute;
+  
+      bottom: 10px;
+  
+      transition: "all ease-in 2s";
+    }
+  
+    .fnt-name{
+  
+      color: black;
+      font-size: 12vw;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+  margin: auto 20px;
+      text-align: center;
+  
+  
+    }
+  
+    .bt{
+  color: white;
+  border-radius: 40px;
+  border: 2px solid black ;
+  font-family: 'Nunito', sans-serif;
+  background-color: black;
+  width: 150px;
+  height: 50px;
+    }
+  
+    .bt:hover{
+   color: black;
+   border: 2px solid black ;
+   background-color: white;
+   transition:  all ease-in .5s;
+  
+  
+    }
+  
+  
+   
+   .menu-btn{
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+   }
+  
+   .mobile-nav{
+z-index: 3;
+position: fixed;
+background-color: #6A097D;
+
+   }
+
+   @media (max-width: 575.98px) { 
+  
+    .navbar-brand{
+      font-size: 1.25rem;
+    }
+  
+  
+  }
+  
