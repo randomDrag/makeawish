@@ -1,10 +1,19 @@
+.Fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 auto;
+    margin: 0 auto;
+}
+
 .Fill input {
     border-radius: 7px;
     width: 200px;
     height: 40px;
     border: none;
     outline: none;
-    padding: 0 30px;
+    padding: 0 20px;
     font-family: 'montserrat';
     font-size: 13px;
 
@@ -26,7 +35,7 @@
     margin-left: 0;
     margin-right: 0;
     font-family: 'montserrat';
-    box-shadow: 0 9px rgba(216, 211, 211, 0.8);
+    
 }
 
 
@@ -37,9 +46,9 @@
     border: none;
 }
 
-.Fill-label{
+.Fill-label {
     font-family: 'montserrat';
-   
+
     text-transform: capitalize;
     top: 0;
     display: flex;
@@ -47,9 +56,9 @@
     font-size: 12px;
 }
 
-.Fill-Link{
+.Fill-Link {
     font-family: 'montserrat';
-   
+
     text-transform: capitalize;
     top: 0;
     display: flex;
@@ -58,21 +67,64 @@
 
 }
 
-.FillButton-Link{
-    
+.FillButton-Link {
+
     font-family: 'montserrat';
-   text-align: center;
+    text-align: center;
     text-transform: capitalize;
-    top: 0;
+  justify-content: center;
     display: flex;
-    margin: 10px 10px;
+    margin: 10px auto;
     font-size: 12px;
+   
     outline: none;
     border: none;
     background-color: transparent;
 }
 
-.FillButton-Link:hover{
+.FillButton-Link:hover {
 
     text-decoration: underline;
+}
+
+
+
+
+.FILL-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+   
+    width: 350px;
+    height: 100px;
+
+    z-index: 12;
+    /* border-radius: 20px; */
+    background-color: #F1D4D4;
+}
+
+.alert-head h6 {
+    font-family: 'Nunito', sans-serif;
+    text-transform: uppercase;
+    margin: "5px 0";
+    font-weight: 900;
+  color :#C060A1;
+}
+
+.alert-para p {
+
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: .8rem;
+}
+
+.alert-button {
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
 }

@@ -9,4 +9,19 @@
     justify-content: center;
     opacity: 1;
     flex-direction: column;
+    position: relative;
+}
+
+.card-Name{
+    position: absolute;
+
+    top: 10%;
+}
+
+.card-Name h6{
+
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+color: #6A097D;
 }
