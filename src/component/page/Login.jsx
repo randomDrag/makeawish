@@ -29,7 +29,7 @@ function Login(){
     if(id === 1){
         setCard(<ForgetPassword login={()=>{buttonHandel(3)}} register={()=>{buttonHandel(2)}}/>);
     }else if (id === 2){
-        setCard(<RegisterCard />)
+        setCard(<RegisterCard login={()=>{buttonHandel(3)}} />)
     }else if (id === 3){
 
      setCard(<LoginId/>)
