@@ -7,7 +7,7 @@ function FillInput(props) {
     return (
 
         <div className="Fill">
-            <input type={props.type} value={props.value} placeholder={props.placeholder} onChange={props.change} name={props.name}/>
+            <input type={props.type} pattern={props.pattern} maxLength={props.maxLength} value={props.value} placeholder={props.placeholder} onChange={props.change} name={props.name} />
         </div>
 
     );
