@@ -4,7 +4,7 @@ import '../../css/navbr.css';
 
 import logo from '../../image/white.svg';
 
-function NavBar() {
+function NavBar(props) {
 
     const [menu, setMenu] = useState(nav());
     
@@ -15,13 +15,7 @@ function NavBar() {
     function ButtonClick(props) {
 
         return (
-            <button className="menu-btn opt" onClick={
-                () => {
-                    gsap.to(window, {
-                        duration: 2,
-                        scrollTo: props.click, ease: Power4.easeInOut
-                    })
-                }}>{props.name}</button>
+            <button className="menu-btn opt" onClick={props.click}>{props.name}</button>
         )
     }
 
@@ -109,14 +103,14 @@ function NavBar() {
                                     <div className="box " >
 
                                         <li className="nav-item">
-                                            <ButtonClick click="#services" name="LOGIN" />
+                                            <ButtonClick click={props.login} name={props.loginName} />
                                         </li>
 
                                         <li className="nav-item">
                                             <a className="opt" href="/about">REGISTER</a>
                                         </li>
                                         <li className="nav-item">
-                                            <ButtonClick click="#contactUs" name="FAQ" />
+                                            <ButtonClick click={()=>{}} name="FAQ" />
 
                                         </li>
                                         

@@ -29,68 +29,13 @@ function RegisterCard(props) {
 
 
     }, []);
-    const [OTPFill, setOTPFill] = useState("");
+
     const [alertBox, setAlertBox] = useState(null);
     const [Loader, setLoader] = useState(false);
     const [isDone, setisDone] = useState(false);
-    const [cardHeight ,setCardHeight] = useState("530px")
-    const [Fields, setFields] = useState({
-
-        Email: "",
-        Password: "",
-        MobileNumber: "",
-        OTP : ""
+    const [cardHeight, setCardHeight] = useState("530px")
 
 
-    })
-
-
-    function ChangeHandel(event) {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        setFields((preval) => {
-
-            if (name === 'Email') {
-                return {
-                    Email: value,
-                    Password: preval.Password,
-                    MobileNumber: preval.MobileNumber,
-                    OTP :preval.OTP
-                }
-
-
-            } else if (name === 'Password') {
-                return {
-                    Email: preval.Email,
-                    Password: value,
-                    MobileNumber: preval.MobileNumber,
-                    OTP :preval.OTP
-                }
-
-            } else if (name === 'Mobile') {
-                return {
-                    Email: preval.Email,
-                    Password: preval.Password,
-                    MobileNumber: value,
-                    OTP :preval.OTP
-                }
-
-            }else if (name === 'OTP') {
-                return {
-                    Email: preval.Email,
-                    Password: preval.Password,
-                    MobileNumber: preval.MobileNumber,
-                    OTP :value
-                }
-
-            }
-
-
-        })
-    }
-
-   
 
     function Loading() {
         return (
@@ -106,55 +51,96 @@ function RegisterCard(props) {
         )
     }
 
-    async function Submit() {
-
-        setLoader(true);
-
-        await api.post('/users/verify', {
-            number: Fields.MobileNumber,
-            Email: Fields.Email,
-            Password: Fields.Password
-        }).then((doc) => {
-
-            if (doc.data.msg) {
-                setLoader(false);
-                setCardHeight("350px");
-                setisDone(true);
-            } else if (doc.data.msg === false) {
-                setLoader(false);
-                setAlertBox(null);
-                setAlertBox(
-                    <FillAlert top="10%" right="10%" heading="Account exist" info="please try to login or use differnt account" />
-                )
-            }
 
 
 
-        });
-
-    }
-
-   async function sendOtp(){
-    setLoader(true);
-    await api.post("/users/register",{code : Fields.OTP}).then((doc)=>{
-
-        if(doc.data.msg === "OK"){
-            setLoader(false);
-            setAlertBox(null);
-            setAlertBox(
-                <FillAlert top="10%" right="10%" heading="done" info="to be count.." />
-            )
-            isDone(false);
-        }
-
-    }).catch((e)=>{
-
-    })
-
-    }
 
     function Cardone() {
 
+        const [Fields, setFields] = useState({
+
+            Email: "",
+            Password: "",
+            MobileNumber: "",
+            OTP: ""
+
+
+        })
+
+
+        function ChangeHandel(event) {
+            const name = event.target.name;
+            const value = event.target.value;
+
+            setFields((preval) => {
+
+                if (name === 'Email') {
+                    return {
+                        Email: value,
+                        Password: preval.Password,
+                        MobileNumber: preval.MobileNumber,
+                        OTP: preval.OTP
+                    }
+
+
+                } else if (name === 'Password') {
+                    return {
+                        Email: preval.Email,
+                        Password: value,
+                        MobileNumber: preval.MobileNumber,
+                        OTP: preval.OTP
+                    }
+
+                } else if (name === 'Mobile') {
+                    return {
+                        Email: preval.Email,
+                        Password: preval.Password,
+                        MobileNumber: value,
+                        OTP: preval.OTP
+                    }
+
+                } else if (name === 'OTP') {
+                    return {
+                        Email: preval.Email,
+                        Password: preval.Password,
+                        MobileNumber: preval.MobileNumber,
+                        OTP: value
+                    }
+
+                }
+
+
+            })
+        }
+
+
+        async function Submit() {
+
+            setLoader(true);
+
+            await api.post('/users/verify', {
+                number: Fields.MobileNumber,
+                Email: Fields.Email,
+                Password: Fields.Password
+            }).then((doc) => {
+
+                if (doc.data.msg) {
+                    setLoader(false);
+                    setCardHeight("350px");
+                    setisDone(true);
+                } else if (doc.data.msg === false) {
+                    setLoader(false);
+                    setAlertBox(null);
+                    setAlertBox(
+                        <FillAlert top="10%" right="10%" heading="Account exist" info="please try to login or use differnt account" />
+                    )
+                }
+
+
+
+            });
+
+        }
 
         return (
             <>
@@ -183,26 +169,90 @@ function RegisterCard(props) {
 
     }
 
-    function CardTwo() {
-       
-        return(
-<>
+    function CardTwo(props) {
+
+        const [work , setWork] = useState(true);
+
+       function Notdone() {
+
+            const [OTPFill, setOTPFill] = useState("");
+
+            async function sendOtp() {
+
+                setLoader(true);
+                await api.post("/users/register", { code: OTPFill }).then((doc) => {
+
+                    if (doc.data.msg === "OK") {
+                        setLoader(false);
+                        setAlertBox(null);
+                       
+                        setAlertBox(
+                            <FillAlert top="10%" right="10%" heading="Register" info="login again" />
+                        );
+                       
+                        
+                        setWork(false);
+                
+                    }
+
+                }).catch((e) => {
+
+                })
+
+            }
+
+            return (
+                <>
+                    <div>
+                        <FillLabel color="#6A097D" name="Enter OTP" />
+                        <FillInput change={(e) => { setOTPFill(e.target.value) }} name="OTP" value={OTPFill} type="text" pattern="\d{6}" maxLength="6" />
+                    </div>
+
+
+                    <div>
+                        {Loader ? <Loading /> : <FillButton name="submit" margin="20px 0" click={sendOtp} bg="#6A097D" color="#F1D4D4" />}
+
+                        <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
+                    </div>
+                </>
+            );
+
+        }
+
+
+        function Done(props){
+
+            return (
+                <>
                 <div>
-                    <FillLabel color="#6A097D" name="Enter OTP" />
-                    <FillInput change={ChangeHandel} name="OTP" value={Fields.OTP} type="text" pattern="\d{6}" maxLength="6" />
+                    <h1>done</h1>
+                </div>
+                
+                <div>
+               
+                <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
+
                 </div>
 
+                </>
+            )
 
-                <div>
-                    {Loader ? <Loading /> : <FillButton name="submit" margin="20px 0" click={sendOtp} bg="#6A097D" color="#F1D4D4" />}
+        }
 
-                    <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
-                </div>
-</>
+
+        return (
+          
+            <>
+            {work ? <Notdone/> : <Done/> }
+            </>
         );
 
     }
 
+
+
+
+   
     return (
 
 
@@ -210,19 +260,19 @@ function RegisterCard(props) {
         <>
             <div className="w-100 h-100 p-0 m-0 d-flex align-items-center justify-content-center">
                 {alertBox}
-                <div ref={el => card = el} className="card-box1" style={{height : cardHeight }}>
+                <div ref={el => card = el} className="card-box1" style={{ height: cardHeight }}>
                     <div ref={el => cardName = el} className="card-Name">
                         <h6>register</h6>
                     </div>
 
-    {  isDone ? <CardTwo/> : <Cardone/> }
+                    {isDone ? <CardTwo /> : <Cardone />}
                 </div>
             </div>
         </>
 
 
 
-    )
+    );
 
 
 }

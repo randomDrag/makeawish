@@ -1,9 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/login.css';
+import {useHistory} from 'react-router-dom';
+import { api } from '../utils/api';
 
-import {FillButton,FillInput,FillLabel,FillButtonLink} from './Extra';
+import { FillButton, FillInput, FillLabel, FillButtonLink } from './Extra';
 
 const LoginCard = (props) => {
+    const his= useHistory();
+
+    const [Fields, setFields] = useState({
+
+        Email: "",
+        Password: ""
+
+    });
+
+    function HandelChange(event) {
+
+        const name = event.target.name;
+        const value = event.target.value;
+
+        setFields((preval) => {
+
+
+            if (name === 'Email') {
+                return {
+                    Email: value,
+                    Password: preval.Password
+                }
+
+
+            } else if (name === 'Password') {
+                return {
+                    Email: preval.Email,
+                    Password: value,
+
+                }
+
+            }
+        });
+
+
+    }
+
+
+    async function submit() {
+
+      await  api.post("/loginuser/login", {
+            Email: Fields.Email,
+            Password: Fields.Password
+        }).then((docs) => {
+
+         if(docs.data.msg && docs.data.isfirsttime){
+
+           his.push("/welcome");
+
+
+
+         }else if((docs.data.msg === true )&& (docs.data.isfirsttime === false)){
+
+            his.push("/users");
+
+         }
+        });
+    }
 
     return (
         <>
@@ -12,18 +72,18 @@ const LoginCard = (props) => {
                 <div className="card-box">
                     <div>
                         <FillLabel color="#6A097D" name="Email" />
-                        <FillInput />
+                        <FillInput type="email" change={HandelChange} name="Email" value={Fields.Email} />
                     </div>
                     <div>
                         <FillLabel color="#6A097D" name="password" />
-                        <FillInput />
+                        <FillInput change={HandelChange} type="password" name="Password" value={Fields.Password} />
                     </div>
 
                     <div>
                         <FillButtonLink color="#6A097D" click={props.register} name="create new account" />
                         <FillButtonLink color="#6A097D" click={props.forget} name="forget password ?" />
 
-                        <FillButton name="login" margin="5px 0" bg="#6A097D" color="#F1D4D4" />
+                        <FillButton name="login" click={submit} margin="5px 0" bg="#6A097D" color="#F1D4D4" />
 
 
                     </div>
