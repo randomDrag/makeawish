@@ -128,3 +128,35 @@
     right: 0;
 
 }
+
+.Fill-options{
+    height: 40px;
+    text-transform: uppercase;
+}
+
+.Fill-options li{
+    padding:0 6px;
+    margin:0 0;
+    padding:0 10px;
+}
+
+.input-class select{
+
+    border-radius: 7px;
+    width: 200px;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 0 30px;
+    font-family: 'montserrat';
+    font-size: 13px;
+    
+    
+}
+
+.select-selected::after{
+
+ 
+    padding: 0 10px;
+
+}

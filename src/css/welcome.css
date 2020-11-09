@@ -1,0 +1,12 @@
+.final-welcome h3{
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.9rem;
+color: #F1D4D4;
+text-align: center;
+}
+
+.final-welcome {
+
+    margin-top: 20px;
+}

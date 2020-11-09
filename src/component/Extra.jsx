@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import '../css/extra.css';
-import { TimelineLite, Power4 } from 'gsap';
+import { TimelineLite, Power4 , TweenLite} from 'gsap';
 
 function FillInput(props) {
 
@@ -95,4 +95,46 @@ function FillAlert(props) {
     );
 }
 
-export { FillInput, FillButton, FillLabel, FillLink, FillButtonLink, FillAlert };
+
+function FillOption(props) {
+
+
+    return (
+        <option className="Fill-options" name={props.v} placeholder={props.placeholder} onChange={props.onChange} value={props.value}>{props.name}</option>
+
+    )
+}
+
+function FillSelect(props) {
+    
+    let inpt1 = useRef(null);
+    
+
+    useEffect(() => {
+    
+        TweenLite.from(inpt1, {
+            duration: "1.5",
+            opacity: 0,
+
+            ease: Power4.easeInOut
+        });
+    }, [])
+
+
+
+
+    return (
+        <div className="input-class">
+            
+            <select type={props.type} name={props.name} onChange={props.onChange} ref={el => inpt1 = el} value={props.value} >
+
+                {props.options}
+
+            </select>
+        </div>
+
+
+    )
+}
+
+export { FillInput, FillButton, FillLabel, FillLink, FillButtonLink, FillAlert ,FillOption  , FillSelect};

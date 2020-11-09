@@ -51,15 +51,26 @@ const LoginCard = (props) => {
             Password: Fields.Password
         }).then((docs) => {
 
-         if(docs.data.msg && docs.data.isfirsttime){
+            console.log(docs);
+         if(docs.data.msg ){
 
-           his.push("/welcome");
+            api.get('loginuser/isAuth').then((d)=>{
+
+
+                if(d.data.isfirsttime){
+                    setTimeout(his.push("/welcome"),1000);
+                }else{
+                 setTimeout(his.push("/user"),1000);
+                }
+            })
+
+        
 
 
 
-         }else if((docs.data.msg === true )&& (docs.data.isfirsttime === false)){
+         }else{
 
-            his.push("/users");
+            his.push("/login");
 
          }
         });
