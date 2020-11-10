@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { TimelineLite, Power4 } from 'gsap';
-import '@lottiefiles/lottie-player';
-import { FillButton, FillInput, FillLabel, FillButtonLink, FillAlert } from './Extra';
 
+import { FillButton, FillInput, FillLabel, FillButtonLink, FillAlert, FillSelect, FillOption } from './Extra';
+import Loading from './Loading';
 import '../css/register.css';
 import { api } from '../utils/api';
+import Axios from 'axios';
 
 
 
@@ -33,29 +34,38 @@ function RegisterCard(props) {
     const [alertBox, setAlertBox] = useState(null);
     const [Loader, setLoader] = useState(false);
     const [isDone, setisDone] = useState(false);
-    const [cardHeight, setCardHeight] = useState("530px")
+    const [cardHeight, setCardHeight] = useState("600px")
 
 
 
-    function Loading() {
-        return (
-            <lottie-player
-                id="firstLottie"
-                loop
-                autoplay
-                background="transparent"
-                mode="bounce"
-                src="https://assets1.lottiefiles.com/temp/lf20_67OOiY.json"
-                style={{ width: '100px', height: "70px" }}
-            ></lottie-player>
-        )
-    }
 
 
 
 
 
     function Cardone() {
+
+        useEffect(() => {
+            CC();
+
+        },[]);
+
+        async function CC() {
+            await Axios.get("https://countriesnow.space/api/v0.1/countries/codes").then((doc) => {
+                let data = doc.data.data;
+
+
+
+                setCcoptions(data)
+
+
+
+
+
+            })
+        }
+
+        const [ccOptions, setCcoptions] = useState([]);
 
         const [Fields, setFields] = useState({
 
@@ -66,7 +76,7 @@ function RegisterCard(props) {
 
 
         })
-
+        const [cc , setcc] = useState("");
 
         function ChangeHandel(event) {
             const name = event.target.name;
@@ -119,6 +129,7 @@ function RegisterCard(props) {
             setLoader(true);
 
             await api.post('/users/verify', {
+                CountryCode : cc,
                 number: Fields.MobileNumber,
                 Email: Fields.Email,
                 Password: Fields.Password
@@ -153,6 +164,21 @@ function RegisterCard(props) {
                     <FillInput name="Password" change={ChangeHandel} value={Fields.Password} type="password" />
                 </div>
                 <div>
+                    <FillLabel color="#6A097D" name="Country Code" />
+                    <FillSelect Name="CountryCode" v="select" options={
+                        [
+                          
+                        ccOptions.map((data , index) => 
+                                       
+                                       <FillOption key={index} value={data.dial_code} name={data.name} />
+                                
+                            
+                        )
+                    ]
+
+                    } placeholder="Country Code" onChange={e => setcc(e.currentTarget.value)} value={cc}/>
+                </div>
+                <div>
                     <FillLabel color="#6A097D" name="Mobile Number" />
                     <FillInput name="Mobile" change={ChangeHandel} pattern="\d{10}" maxLength="10" value={Fields.MobileNumber} type="text" />
                 </div>
@@ -171,9 +197,9 @@ function RegisterCard(props) {
 
     function CardTwo(props) {
 
-        const [work , setWork] = useState(true);
+        const [work, setWork] = useState(true);
 
-       function Notdone() {
+        function Notdone() {
 
             const [OTPFill, setOTPFill] = useState("");
 
@@ -185,14 +211,14 @@ function RegisterCard(props) {
                     if (doc.data.msg === "OK") {
                         setLoader(false);
                         setAlertBox(null);
-                       
+
                         setAlertBox(
                             <FillAlert top="10%" right="10%" heading="Register" info="login again" />
                         );
-                       
-                        
+
+
                         setWork(false);
-                
+
                     }
 
                 }).catch((e) => {
@@ -220,19 +246,19 @@ function RegisterCard(props) {
         }
 
 
-        function Done(props){
+        function Done(props) {
 
             return (
                 <>
-                <div>
-                    <h1>done</h1>
-                </div>
-                
-                <div>
-               
-                <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
+                    <div>
+                        <h1>done</h1>
+                    </div>
 
-                </div>
+                    <div>
+
+                        <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
+
+                    </div>
 
                 </>
             )
@@ -241,9 +267,9 @@ function RegisterCard(props) {
 
 
         return (
-          
+
             <>
-            {work ? <Notdone/> : <Done/> }
+                {work ? <Notdone /> : <Done />}
             </>
         );
 
@@ -252,7 +278,7 @@ function RegisterCard(props) {
 
 
 
-   
+
     return (
 
 

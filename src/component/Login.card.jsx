@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import { api } from '../utils/api';
 
 import { FillButton, FillInput, FillLabel, FillButtonLink } from './Extra';
+import Loading from './Loading';
 
 const LoginCard = (props) => {
     const his= useHistory();
@@ -14,6 +15,8 @@ const LoginCard = (props) => {
         Password: ""
 
     });
+
+    const [isLoading , setisLoading] = useState(false);
 
     function HandelChange(event) {
 
@@ -45,7 +48,7 @@ const LoginCard = (props) => {
 
 
     async function submit() {
-
+        setisLoading(false);
       await  api.post("/loginuser/login", {
             Email: Fields.Email,
             Password: Fields.Password
@@ -56,7 +59,7 @@ const LoginCard = (props) => {
 
             api.get('loginuser/isAuth').then((d)=>{
 
-
+                setisLoading(false);
                 if(d.data.isfirsttime){
                     setTimeout(his.push("/welcome"),1000);
                 }else{
@@ -69,7 +72,7 @@ const LoginCard = (props) => {
 
 
          }else{
-
+            setisLoading(false);
             his.push("/login");
 
          }
@@ -94,7 +97,7 @@ const LoginCard = (props) => {
                         <FillButtonLink color="#6A097D" click={props.register} name="create new account" />
                         <FillButtonLink color="#6A097D" click={props.forget} name="forget password ?" />
 
-                        <FillButton name="login" click={submit} margin="5px 0" bg="#6A097D" color="#F1D4D4" />
+    { isLoading ? <Loading/> : <FillButton name="login" click={submit} margin="5px 0" bg="#6A097D" color="#F1D4D4" /> }
 
 
                     </div>

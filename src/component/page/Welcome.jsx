@@ -4,6 +4,7 @@ import { api } from '../../utils/api';
 import { FillAlert, FillButton, FillInput, FillLabel, FillOption, FillSelect } from '../Extra';
 import { useHistory } from 'react-router-dom';
 import '../../css/welcome.css';
+import Loading from '../Loading';
 function Welcome() {
     const his = useHistory();
 
@@ -13,6 +14,11 @@ function Welcome() {
         AGE: "",
         PLACE: ""
     });
+
+    const [gender , setGender]=useState("");
+    const [areyou , setareyou]=useState("");
+    const [isloading , setIsloading]=useState(false);
+
 
     function handleChange(event) {
         const name = event.target.name;
@@ -72,10 +78,17 @@ function Welcome() {
 
     async function submit(){
 
-        api.post('/userinfo/firstpage',{NAME : Fields.NAME , AGE : Fields.AGE , PLACE : Fields.PLACE})
+        setIsloading(true)
+        api.post('/userinfo/firstpage',{NAME : Fields.NAME , AGE : Fields.AGE , PLACE : Fields.PLACE ,
+            GENDER : gender ,occupation: areyou })
         .then((doc)=>{
 
-            console.log(doc);
+           if(doc.data.msg){
+               his.push("/user");
+               setIsloading(false);
+           }else{
+            his.push("/");
+           }
 
         });
 
@@ -91,8 +104,8 @@ function Welcome() {
                 <Nvbar loginName="LOGOUT" login={logout} />
 
                 <div className="row h-100 w-100 p-0 m-0">
-                    <div className="col-md-8 col-12 h-100 w-100">
-                        <div className="d-flex align-items-center justify-content-center flex-column w-100 h-90">
+                    <div className="col-md-8 col-12 h-100 w-100 m-0 p-0">
+                        <div className="d-flex align-items-center justify-content-center flex-column  w-100 h-90">
                             <div className="final-welcome">
                                 <h3>Welcome , last step</h3>
 
@@ -108,45 +121,46 @@ function Welcome() {
                                     <FillInput name="AGE" change={handleChange} value={Fields.AGE} />
                                 </div>
                                 <div>
-                                    <FillLabel name="Place" color="#F1D4D4" />
+                                    <FillLabel name="STATE" color="#F1D4D4" />
                                     <FillInput name="PLACE" change={handleChange} value={Fields.PLACE} />
                                 </div>
                                 <div>
                                     <FillLabel name="Gender" color="#F1D4D4" />
 
 
-                                    <FillSelect Name="category" v="select" options={
-                                        [<FillOption key="0" value="Male" name="Male" />,
-                                        <FillOption key="1" value="Female" name="Female" />,
-                                        <FillOption key="2" value="Other" name="other" />,
+                                    <FillSelect Name="gender" v="select" options={
+                                        [<FillOption key="0" value="select" name="select" />,
+                                        <FillOption key="1" value="Male" name="Male" />,
+                                        <FillOption key="2" value="Female" name="Female" />,
+                                        <FillOption key="3" value="Other" name="other" />,
 
                                         ]
-                                    } placeholder="gender" />
+                                    } placeholder="gender" value={gender} onChange={e => setGender(e.currentTarget.value)} />
                                 </div>
 
                                 <div>
-                                    <FillLabel name="occupation" color="#F1D4D4" />
+                                    <FillLabel name="Are you" color="#F1D4D4" />
 
 
                                     <FillSelect Name="category" v="select" options={
-                                        [<FillOption key="0" value="Male" name="Male" />,
-                                        <FillOption key="1" value="student" name="student" />,
+                                        [<FillOption key="0" value="select" name="select" />,
+                                        <FillOption key="1" value="student" name="Student" />,
                                         <FillOption key="2" value="Other" name="other" />,
 
                                         ]
-                                    } placeholder="occupation" />
+                                    } placeholder="Are you" value={areyou} onChange={e => setareyou(e.currentTarget.value)} />
                                 </div>
 
 
                                 <div>
-                                    <FillButton name="submit" margin="15px 0" color="#6A097D" bg="#F1D4D4" click={submit} />
+                                { isloading ? <Loading/> : <FillButton name="submit" margin="15px 0" color="#6A097D" bg="#F1D4D4" click={submit} /> }
                                 </div>
                             </div>
 
 
                         </div>
                     </div>
-                    <div className="col-md-4 col-12 h-100 w-100 d-flex justify-content-center align-items-center">
+                    <div className="col-md-4 col-12 h-100 w-100 m-0 p-0 d-flex justify-content-center align-items-center">
 
                         <div style={{ border: "2px solid red", margin: "5px" }}>
                             <ins className="adsbygoogle"

@@ -19,3 +19,27 @@
     font-family: 'Montserrat', sans-serif;
 
 }
+
+.wish-button{
+    display: flex;
+
+    flex-direction: row;
+}
+
+.wish-list-card{
+    margin: 20px 0;
+}
+
+.wish-list-main h4{
+    text-transform: uppercase;
+    color: #F1D4D4;
+    text-align: center;
+}
+
+.wish-list-main {
+    border-radius: 9px;
+    padding: 10px;
+    width: 260px;
+    background-color: #C060A1;
+    margin: 5px 0;
+}
