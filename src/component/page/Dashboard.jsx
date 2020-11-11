@@ -4,12 +4,14 @@ import '../../css/dashboard.css';
 import { api } from '../../utils/api';
 import { FillAlert, FillButton, FillButtonLink, FillInput, FillLabel } from '../Extra';
 import { useHistory } from 'react-router-dom';
+import Loading from '../Loading';
 
 
 function Dashboard() {
 
     const [name, setName] = useState("");
-    const [wish, setWish] = useState([3]);
+    const [wish, setWish] = useState([]);
+    const [isLoading , setisLoading] = useState(false);
     const [addWish, setAddWish] = useState("");
 
 
@@ -53,10 +55,12 @@ function Dashboard() {
     }
 
     async function wishsubmit(){
+        setisLoading(true);
             api.post("/userinfo/add/wish",{wish : addWish}).then((doc)=>{
 
                 if(doc.data.msg){
                     wishdata();
+                    setisLoading(false);
                 }
 
 
@@ -64,9 +68,15 @@ function Dashboard() {
 
     }
 
-    function removeID(id){
-        api.get(`/userinfo/remove/${id}`).then((doc)=>{
-console.log(doc);
+   async function removeID(id){
+     
+    await api.get(`/userinfo/remove/${id}`).then((doc)=>{
+
+            if(doc.data.msg){
+                wishdata();
+            }
+        }).catch((e)=>{
+
         });
 
     }
@@ -76,8 +86,8 @@ console.log(doc);
             <div className="wish-list-main">
                 <h4>{props.name}</h4>
                 <div className="wish-button">
-                    <FillButtonLink name="Edit" color="#F1D4D4" click={props.edit} />
-                    <FillButtonLink name="Remove" color="#F1D4D4" click={props.remove} />
+                    <FillButtonLink name="Edit" color="#6A097D" click={props.edit} />
+                    <FillButtonLink name="Remove" color="#6A097D" click={props.remove} />
                 </div>
 
             </div>
@@ -86,7 +96,7 @@ console.log(doc);
 
     return (
 
-        <section className="h-100 w-100 p-0 m-0" style={{ background: "#6A097D" }}>
+        <section className="min-vh-100 w-100 p-0 m-0" style={{ background: "#6A097D" }}>
             <Nvbar loginName="LOGOUT" login={logout} />
 
             <div className="d-flex align-items-center justify-content-center flex-column ">
@@ -110,8 +120,8 @@ console.log(doc);
                 </div>
                 <div style={{ position: "relative", bottom: "20px" }}>
                     <FillLabel name="ADD WISH" color="#F1D4D4" />
-                    <FillInput type="text" placeholder="enter wish here" change={e => setAddWish(e.currentTarget.value)} value={addWish}/>
-                    <FillButton name="ADD" margin="15px 0" click={wishsubmit} />
+                    <FillInput type="text"  change={e => setAddWish(e.currentTarget.value)} value={addWish}/>
+                    { isLoading ? <Loading/> : <FillButton name="ADD" margin="15px 0" click={wishsubmit} /> }
                 </div>
 
             </div>

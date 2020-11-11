@@ -11,6 +11,7 @@ function Home() {
 
     const his = useHistory();
     const [isclicked, setIsClicked] = useState(false);
+    const [card ,setcard]=useState(null);
 
     function islogin() {
         api.get('loginuser/isAuth').then((doc) => {
@@ -26,7 +27,8 @@ function Home() {
            
             }
             else {
-                setIsClicked(true)
+                setcard(true);
+                setIsClicked(true);
             }
         }).catch((e)=>{
 
@@ -38,8 +40,8 @@ function Home() {
         <>
 
             <section className="w-100 h-100 p-0 m-0" style={{ background: "#6A097D" }}>
-                {isclicked ? <Login /> : null}
-                <Nvbar loginName="LOGIN" login={islogin} />
+                {isclicked ? <Login close={()=>setIsClicked(false)} cardtype={card} /> : null}
+                <Nvbar loginName="LOGIN" login={islogin} registername="REGISTER" register={()=>{setcard(false); setIsClicked(true);}}/>
                 <div className="row m-0 w-100 p-0 m-0">
 
                     <div className="col-sm-9 w-100 m-0 d-flex align-items-center justify-content-center col1" >

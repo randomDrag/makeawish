@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import '../css/login.css';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { api } from '../utils/api';
 
 import { FillButton, FillInput, FillLabel, FillButtonLink } from './Extra';
 import Loading from './Loading';
 
 const LoginCard = (props) => {
-    const his= useHistory();
+    const his = useHistory();
 
     const [Fields, setFields] = useState({
 
@@ -16,7 +16,7 @@ const LoginCard = (props) => {
 
     });
 
-    const [isLoading , setisLoading] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
 
     function HandelChange(event) {
 
@@ -48,34 +48,34 @@ const LoginCard = (props) => {
 
 
     async function submit() {
-        setisLoading(false);
-      await  api.post("/loginuser/login", {
+        setisLoading(true);
+        await api.post("/loginuser/login", {
             Email: Fields.Email,
             Password: Fields.Password
         }).then((docs) => {
 
             console.log(docs);
-         if(docs.data.msg ){
+            if (docs.data.msg) {
 
-            api.get('loginuser/isAuth').then((d)=>{
+                api.get('loginuser/isAuth').then((d) => {
 
+                    setisLoading(false);
+                    if (d.data.isfirsttime) {
+                        setTimeout(his.push("/welcome"), 1000);
+                    } else {
+                        setTimeout(his.push("/user"), 1000);
+                    }
+                })
+
+
+
+
+
+            } else {
                 setisLoading(false);
-                if(d.data.isfirsttime){
-                    setTimeout(his.push("/welcome"),1000);
-                }else{
-                 setTimeout(his.push("/user"),1000);
-                }
-            })
+                his.push("/login");
 
-        
-
-
-
-         }else{
-            setisLoading(false);
-            his.push("/login");
-
-         }
+            }
         });
     }
 
@@ -97,8 +97,8 @@ const LoginCard = (props) => {
                         <FillButtonLink color="#6A097D" click={props.register} name="create new account" />
                         <FillButtonLink color="#6A097D" click={props.forget} name="forget password ?" />
 
-    { isLoading ? <Loading/> : <FillButton name="login" click={submit} margin="5px 0" bg="#6A097D" color="#F1D4D4" /> }
-
+                        {isLoading ? <Loading /> : <FillButton name="login" click={submit} margin="5px 0" bg="#6A097D" color="#F1D4D4" />}
+                        <FillButtonLink color="#6A097D" click={props.close} name="close" />
 
                     </div>
                 </div>

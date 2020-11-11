@@ -5,10 +5,12 @@ import LoginCard  from '../Login.card';
 import ForgetPassword from '../Forget.password';
 import RegisterCard from '../Register.card';
 
-function Login(){
 
+function Login(props){
 
-    const [card , setCard] = useState(<LoginId/>);
+    const [iscard , setiscard]= useState(props.cardtype);
+
+    const [card , setCard] = useState(iscard ? <LoginId/> : <RegisterId/> );
 
 
     useEffect(()=>{
@@ -19,8 +21,15 @@ function Login(){
 
  function LoginId(){
      return(
-     <LoginCard forget={()=>{buttonHandel(1)}} register={()=>{buttonHandel(2)}} />
+     <LoginCard forget={()=>{buttonHandel(1)}} register={()=>{buttonHandel(2)} } close={props.close}  />
      );
+ }
+
+ function RegisterId(){
+     return(
+    <RegisterCard login={()=>{buttonHandel(3)}} />
+     )
+
  }
 
 
@@ -29,7 +38,7 @@ function Login(){
     if(id === 1){
         setCard(<ForgetPassword login={()=>{buttonHandel(3)}} register={()=>{buttonHandel(2)}}/>);
     }else if (id === 2){
-        setCard(<RegisterCard login={()=>{buttonHandel(3)}} />)
+        setCard(<RegisterId/>)
     }else if (id === 3){
 
      setCard(<LoginId/>)

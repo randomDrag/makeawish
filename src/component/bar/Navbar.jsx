@@ -4,6 +4,8 @@ import '../../css/navbr.css';
 
 import logo from '../../image/white.svg';
 
+import Mlogo from '../../image/makeanav.svg';
+
 function NavBar(props) {
 
     const [menu, setMenu] = useState(nav());
@@ -107,7 +109,7 @@ function NavBar(props) {
                                         </li>
 
                                         <li className="nav-item">
-                                            <a className="opt" href="/about">REGISTER</a>
+                                        <ButtonClick click={props.register} name={props.registername} />
                                         </li>
                                         <li className="nav-item">
                                             <ButtonClick click={()=>{}} name="FAQ" />
@@ -124,7 +126,7 @@ function NavBar(props) {
                                     <div className="box " >
                                     <button className="navbar-toggler " type="button" data-toggle="collapse" onClick={menuRunner} data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                             <span >
-                                                <img src={logo} alt="menuBar" width="25vw" height="25vh" />
+                                                <img src={Mlogo} alt="menuBar" width="25vw" height="25vh" />
                                             </span>
                                         </button>
                                     </div>

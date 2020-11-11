@@ -32,7 +32,7 @@
 
 .wish-list-main h4{
     text-transform: uppercase;
-    color: #F1D4D4;
+    color:  #6A097D;
     text-align: center;
 }
 
@@ -40,6 +40,6 @@
     border-radius: 9px;
     padding: 10px;
     width: 260px;
-    background-color: #C060A1;
+    background-color: #F1D4D4;
     margin: 5px 0;
 }
