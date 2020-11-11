@@ -162,14 +162,14 @@ function Welcome() {
                     </div>
                     <div className="col-md-4 col-12 h-100 w-100 m-0 p-0 d-flex justify-content-center align-items-center">
 
-                        <div style={{ border: "2px solid red", margin: "5px" }}>
+                        <div style={{ margin: "5px" }}>
                             <ins className="adsbygoogle"
                                 style={{ display: "block", minHeight: "300px", minWidth: "300px", textAlign: 'center' }}
                                 data-ad-client="ca-pub-8683834154321399"
                                 data-ad-slot="1283171240"
                                 data-ad-format="auto"
                                 data-full-width-responsive="true"
-                                data-adtest="on"
+                               
                             ></ins>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { gsap, Power4 } from 'gsap';
 import '../../css/navbr.css';
-
+import {useHistory} from 'react-router-dom';
 import logo from '../../image/white.svg';
 
 import Mlogo from '../../image/makeanav.svg';
@@ -12,7 +12,7 @@ function NavBar(props) {
     
     let isMobile = true;
 
-
+    const hs = useHistory();
 
     function ButtonClick(props) {
 
@@ -55,14 +55,23 @@ function NavBar(props) {
 
                             <div>
                                 <li className="nav-item ">
-                                    <a className="mbar" href="/"> LOGIN</a>
+                                    <div>
+                                    <ButtonClick click={props.login} name={props.loginName} />
+                                    </div>
+                             
                                 </li>
                                 
                                 <li className="nav-item">
-                                    <a className="mbar" href="/about">REGISTER</a>
+                                    <div>
+                                    <ButtonClick click={props.register} name={props.registername} />
+                                    </div>
+                               
                                 </li>
                                 <li className="nav-item">
-                                   <ButtonClick click="#services" name="FAQ" />
+                                    <div>
+                                    <ButtonClick click={()=>{hs.push("/FAQ")}} name="FAQ" />
+                                    </div>
+                                
                                 </li>
 
 
@@ -88,7 +97,7 @@ function NavBar(props) {
     function nav() {
 
         return (
-            <nav className="navbar navbar-expand-sm  w-100 " style={{ position: "relative", top: "0", zIndex: "3", border: "2px solid red", padding: "0" }} >
+            <nav className="navbar navbar-expand-sm  w-100 " style={{ position: "relative", top: "0", zIndex: "3", padding: "0" }} >
 
                 <div className="d-flex w-100" >
 
@@ -112,7 +121,7 @@ function NavBar(props) {
                                         <ButtonClick click={props.register} name={props.registername} />
                                         </li>
                                         <li className="nav-item">
-                                            <ButtonClick click={()=>{}} name="FAQ" />
+                                            <ButtonClick click={()=>{hs.push("/FAQ")}} name="FAQ" />
 
                                         </li>
                                         

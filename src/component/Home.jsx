@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Nvbar from './bar/Navbar';
 import '../css/home.css';
 import backImage from '../image/black.svg';
@@ -6,8 +6,13 @@ import { FillInput, FillButton } from '../component/Extra';
 import Login from './page/Login';
 import { api } from '../utils/api';
 import { useHistory } from 'react-router-dom';
+import PageTwo from './page/Page.two';
 
 function Home() {
+    useEffect(()=>{
+        window.adsbygoogle = window.adsbygoogle || []
+        window.adsbygoogle.push({})
+    },[])
 
     const his = useHistory();
     const [isclicked, setIsClicked] = useState(false);
@@ -39,7 +44,7 @@ function Home() {
     return (
         <>
 
-            <section className="w-100 h-100 p-0 m-0" style={{ background: "#6A097D" }}>
+            <section className="w-100 min-vh-100 p-0 m-0" style={{ background: "#6A097D" }}>
                 {isclicked ? <Login close={()=>setIsClicked(false)} cardtype={card} /> : null}
                 <Nvbar loginName="LOGIN" login={islogin} registername="REGISTER" register={()=>{setcard(false); setIsClicked(true);}}/>
                 <div className="row m-0 w-100 p-0 m-0">
@@ -74,6 +79,16 @@ function Home() {
                 </div>
 
             </section>
+            <PageTwo/>
+            <div className="p-0 m-0" style={{ backgroundColor:"#6A097D" , height : "70px", width :"100%"}}>
+                <ins className="adsbygoogle"
+                    style={{ display: "block", height: "70px", minWidth: "300px", textAlign: 'center' }}
+                    data-ad-client="ca-pub-8683834154321399"
+                    data-ad-slot="4678688441"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                ></ins>
+            </div>
         </>
     );
 
