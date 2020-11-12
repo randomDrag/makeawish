@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { FillButton, FillInput, FillLabel, FillAlert } from '../Extra';
 import Loading from '../Loading';
 
-function Adminreg(){
+function Adminlogin(){
 
     const his = useHistory();
 
@@ -49,7 +49,7 @@ function Adminreg(){
 
     async function submit() {
         setisLoading(true);
-        await api.post("/admin/adminregister", {
+        await api.post("/admin/login", {
             Email: Fields.Email,
             Password: Fields.Password
         }).then((docs) => {
@@ -59,11 +59,11 @@ function Adminreg(){
 
                 setisLoading(false);
 
-
+                his.push("/admindb");
 
             } else {
                 setisLoading(false);
-                his.push("/login");
+                his.push("/AAL");
 
             }
         }).catch((e)=>{
@@ -109,4 +109,4 @@ function Adminreg(){
 
 }
 
-export default Adminreg;
+export default Adminlogin;
