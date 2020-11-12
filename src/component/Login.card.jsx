@@ -3,7 +3,7 @@ import '../css/login.css';
 import { useHistory } from 'react-router-dom';
 import { api } from '../utils/api';
 
-import { FillButton, FillInput, FillLabel, FillButtonLink } from './Extra';
+import { FillButton, FillInput, FillLabel, FillButtonLink, FillAlert } from './Extra';
 import Loading from './Loading';
 
 const LoginCard = (props) => {
@@ -16,6 +16,7 @@ const LoginCard = (props) => {
 
     });
 
+    const [alertBox, setAlertBox] = useState(null);
     const [isLoading, setisLoading] = useState(false);
 
     function HandelChange(event) {
@@ -54,7 +55,7 @@ const LoginCard = (props) => {
             Password: Fields.Password
         }).then((docs) => {
 
-            console.log(docs);
+          
             if (docs.data.msg) {
 
                 api.get('loginuser/isAuth').then((d) => {
@@ -76,13 +77,19 @@ const LoginCard = (props) => {
                 his.push("/login");
 
             }
-        });
+        }).catch((e)=>{
+            setisLoading(false);
+            setAlertBox(null);
+            setAlertBox(
+                <FillAlert top="10%" right="10%" heading="Fill input " info="please try to login or use differnt account" />
+            )
+        })
     }
 
     return (
         <>
             <div className="w-100 h-100 p-0 m-0 d-flex align-items-center justify-content-center">
-
+            {alertBox}
                 <div className="card-box">
                     <div>
                         <FillLabel color="#6A097D" name="Email" />

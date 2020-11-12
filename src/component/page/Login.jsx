@@ -10,7 +10,7 @@ function Login(props){
 
     const [iscard , setiscard]= useState(props.cardtype);
 
-    const [card , setCard] = useState(iscard ? <LoginId/> : <RegisterId/> );
+    const [card , setCard] = useState(!iscard ? <LoginId/> : <RegisterId/> );
 
 
     useEffect(()=>{

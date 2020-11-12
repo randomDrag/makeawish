@@ -11,14 +11,14 @@ function Dashboard() {
 
     const [name, setName] = useState("");
     const [wish, setWish] = useState([]);
-    const [isLoading , setisLoading] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
     const [addWish, setAddWish] = useState("");
 
 
     useEffect(() => {
 
         namefun();
-        
+
     }, []);
 
     async function namefun() {
@@ -54,34 +54,37 @@ function Dashboard() {
         })
     }
 
-    async function wishsubmit(){
+    async function wishsubmit() {
         setisLoading(true);
-            api.post("/userinfo/add/wish",{wish : addWish}).then((doc)=>{
+        if (addWish != null || addWish != "") {
+            api.post("/userinfo/add/wish", { wish: addWish }).then((doc) => {
 
-                if(doc.data.msg){
+                if (doc.data.msg) {
                     wishdata();
                     setisLoading(false);
                 }
 
 
             });
-
+        } else {
+            setisLoading(false);
+        }
     }
 
-   async function removeID(id){
-     
-    await api.get(`/userinfo/remove/${id}`).then((doc)=>{
+    async function removeID(id) {
 
-            if(doc.data.msg){
+        await api.get(`/userinfo/remove/${id}`).then((doc) => {
+
+            if (doc.data.msg) {
                 wishdata();
             }
-        }).catch((e)=>{
+        }).catch((e) => {
 
         });
 
     }
 
-    function Itemcard(props){
+    function Itemcard(props) {
         return (
             <div className="wish-list-main">
                 <h4>{props.name}</h4>
@@ -91,7 +94,7 @@ function Dashboard() {
                 </div>
 
             </div>
-            );
+        );
     }
 
     return (
@@ -110,9 +113,9 @@ function Dashboard() {
 
                 <div className="wish-list-card">
 
-                    {wish.map((data,index) => 
-                       
-                       <Itemcard key={index} name={data.Wish_NAME} remove={()=> removeID(data._id)} />
+                    {wish.map((data, index) =>
+
+                        <Itemcard key={index} name={data.Wish_NAME} remove={() => removeID(data._id)} />
 
                     )}
 
@@ -120,8 +123,8 @@ function Dashboard() {
                 </div>
                 <div style={{ position: "relative", bottom: "20px" }}>
                     <FillLabel name="ADD WISH" color="#F1D4D4" />
-                    <FillInput type="text"  change={e => setAddWish(e.currentTarget.value)} value={addWish}/>
-                    { isLoading ? <Loading/> : <FillButton name="ADD" margin="15px 0" click={wishsubmit} /> }
+                    <FillInput type="text" change={e => setAddWish(e.currentTarget.value)} value={addWish} />
+                    {isLoading ? <Loading /> : <FillButton name="ADD" margin="15px 0" click={wishsubmit} />}
                 </div>
 
             </div>

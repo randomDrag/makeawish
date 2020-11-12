@@ -15,9 +15,10 @@ function Welcome() {
         PLACE: ""
     });
 
-    const [gender , setGender]=useState("");
-    const [areyou , setareyou]=useState("");
-    const [isloading , setIsloading]=useState(false);
+    const [alertBox, setAlertBox] = useState(null);
+    const [gender, setGender] = useState("");
+    const [areyou, setareyou] = useState("");
+    const [isloading, setIsloading] = useState(false);
 
 
     function handleChange(event) {
@@ -28,20 +29,20 @@ function Welcome() {
             if (name === "FullName") {
                 return {
                     NAME: value,
-                    AGE:preval.AGE,
+                    AGE: preval.AGE,
                     PLACE: preval.PLACE
                 }
-            }else if (name === "AGE"){
+            } else if (name === "AGE") {
                 return {
                     NAME: preval.NAME,
-                    AGE:value,
+                    AGE: value,
                     PLACE: preval.PLACE
                 }
 
-            }else if (name === "PLACE"){
+            } else if (name === "PLACE") {
                 return {
                     NAME: preval.NAME,
-                    AGE:preval.AGE,
+                    AGE: preval.AGE,
                     PLACE: value
                 }
 
@@ -76,22 +77,37 @@ function Welcome() {
         })
     }
 
-    async function submit(){
+    async function submit() {
 
         setIsloading(true)
-        api.post('/userinfo/firstpage',{NAME : Fields.NAME , AGE : Fields.AGE , PLACE : Fields.PLACE ,
-            GENDER : gender ,occupation: areyou })
-        .then((doc)=>{
 
-           if(doc.data.msg){
-               his.push("/user");
-               setIsloading(false);
-           }else{
-            his.push("/");
-           }
+        if ((Fields.NAME && Fields.AGE && Fields.PLACE &&
+            gender && areyou != null) || (Fields.NAME && Fields.AGE && Fields.PLACE &&
+                gender && areyou != "")) {
 
-        });
+            api.post('/userinfo/firstpage', {
+                NAME: Fields.NAME, AGE: Fields.AGE, PLACE: Fields.PLACE,
+                GENDER: gender, occupation: areyou
+            })
+                .then((doc) => {
 
+                    if (doc.data.msg) {
+                        his.push("/user");
+                        setIsloading(false);
+                    } else {
+                        his.push("/");
+                        setIsloading(false);
+                    }
+
+                });
+        } else {
+            setAlertBox(null);
+            setIsloading(false);
+          
+            setAlertBox(
+                <FillAlert top="10%" right="10%" heading="Fill input " info="please Fill all the fields" />
+            );
+        }
 
     }
 
@@ -102,7 +118,7 @@ function Welcome() {
         <>
             <section className="vh-100 w-100 p-0 m-0" style={{ background: "#6A097D" }}>
                 <Nvbar loginName="LOGOUT" login={logout} />
-
+            {alertBox}
                 <div className="row h-100 w-100 p-0 m-0">
                     <div className="col-md-8 col-12 h-100 w-100 m-0 p-0">
                         <div className="d-flex align-items-center justify-content-center flex-column  w-100 h-90">
@@ -153,7 +169,7 @@ function Welcome() {
 
 
                                 <div>
-                                { isloading ? <Loading/> : <FillButton name="submit" margin="15px 0" color="#6A097D" bg="#F1D4D4" click={submit} /> }
+                                    {isloading ? <Loading /> : <FillButton name="submit" margin="15px 0" color="#6A097D" bg="#F1D4D4" click={submit} />}
                                 </div>
                             </div>
 
@@ -169,7 +185,7 @@ function Welcome() {
                                 data-ad-slot="1283171240"
                                 data-ad-format="auto"
                                 data-full-width-responsive="true"
-                               
+
                             ></ins>
                         </div>
                     </div>

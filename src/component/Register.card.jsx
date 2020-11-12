@@ -6,11 +6,13 @@ import Loading from './Loading';
 import '../css/register.css';
 import { api } from '../utils/api';
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 
 function RegisterCard(props) {
 
+    const hs = useHistory();
     let tl = new TimelineLite();
     let card = useRef('null');
     let cardName = useRef('null');
@@ -32,7 +34,7 @@ function RegisterCard(props) {
     }, []);
 
     const [alertBox, setAlertBox] = useState(null);
-    const [Loader, setLoader] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
     const [isDone, setisDone] = useState(false);
     const [cardHeight, setCardHeight] = useState("600px")
 
@@ -48,7 +50,7 @@ function RegisterCard(props) {
         useEffect(() => {
             CC();
 
-        },[]);
+        }, []);
 
         async function CC() {
             await Axios.get("https://countriesnow.space/api/v0.1/countries/codes").then((doc) => {
@@ -56,12 +58,7 @@ function RegisterCard(props) {
 
 
 
-                setCcoptions(data)
-
-
-
-
-
+                setCcoptions(data);
             })
         }
 
@@ -76,7 +73,7 @@ function RegisterCard(props) {
 
 
         })
-        const [cc , setcc] = useState("");
+        const [cc, setcc] = useState("");
 
         function ChangeHandel(event) {
             const name = event.target.name;
@@ -126,30 +123,47 @@ function RegisterCard(props) {
 
         async function Submit() {
 
-            setLoader(true);
+            setisLoading(true);
 
-            await api.post('/users/verify', {
-                CountryCode : cc,
-                number: Fields.MobileNumber,
-                Email: Fields.Email,
-                Password: Fields.Password
-            }).then((doc) => {
+            if (cc&&
+                Fields.MobileNumber&&
+                Fields.Email&&
+                Fields.Password != null || cc&&
+                Fields.MobileNumber&&
+                Fields.Email&&
+                Fields.Password != "") {
 
-                if (doc.data.msg) {
-                    setLoader(false);
-                    setCardHeight("350px");
-                    setisDone(true);
-                } else if (doc.data.msg === false) {
-                    setLoader(false);
-                    setAlertBox(null);
-                    setAlertBox(
-                        <FillAlert top="10%" right="10%" heading="Account exist" info="please try to login or use differnt account" />
-                    )
-                }
+                await api.post('/users/verify', {
+                    CountryCode: cc,
+                    number: Fields.MobileNumber,
+                    Email: Fields.Email,
+                    Password: Fields.Password
+                }).then((doc) => {
+
+                    if (doc.data.msg) {
+                        setisLoading(false);
+                        setCardHeight("350px");
+                        setisDone(true);
+                    } else if (doc.data.msg === false) {
+                        setisLoading(false);
+                        setAlertBox(null);
+                        setAlertBox(
+                            <FillAlert top="10%" right="10%" heading="Account exist" info="please try to login or use differnt account" />
+                        )
+                    }
 
 
 
-            });
+                });
+            } else {
+            
+                setisLoading(false);
+                setAlertBox(null);
+                setTimeout(
+                setAlertBox(
+                    <FillAlert top="10%" right="10%" heading="Fill input " info="Please Fill all the fields" />
+                ),3000)
+            }
 
         }
 
@@ -167,16 +181,16 @@ function RegisterCard(props) {
                     <FillLabel color="#6A097D" name="Country Code" />
                     <FillSelect Name="CountryCode" v="select" options={
                         [
-                          
-                        ccOptions.map((data , index) => 
-                                       
-                                       <FillOption key={index} value={data.dial_code} name={data.name} />
-                                
-                            
-                        )
-                    ]
 
-                    } placeholder="Country Code" onChange={e => setcc(e.currentTarget.value)} value={cc}/>
+                            ccOptions.map((data, index) =>
+
+                                <FillOption key={index} value={data.dial_code} name={data.name} />
+
+
+                            )
+                        ]
+
+                    } placeholder="Country Code" onChange={e => setcc(e.currentTarget.value)} value={cc} />
                 </div>
                 <div>
                     <FillLabel color="#6A097D" name="Mobile Number" />
@@ -185,7 +199,7 @@ function RegisterCard(props) {
                 <div>
 
 
-                    {Loader ? <Loading /> : <FillButton name="Next" margin="20px 0" click={Submit} bg="#6A097D" color="#F1D4D4" />}
+                    {isLoading ? <Loading /> : <FillButton name="Next" margin="20px 0" click={Submit} bg="#6A097D" color="#F1D4D4" />}
 
                     <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
                 </div>
@@ -197,81 +211,75 @@ function RegisterCard(props) {
 
     function CardTwo(props) {
 
-        const [work, setWork] = useState(true);
 
-        function Notdone() {
 
-            const [OTPFill, setOTPFill] = useState("");
 
-            async function sendOtp() {
 
-                setLoader(true);
+        const [OTPFill, setOTPFill] = useState("");
+
+        async function sendOtp() {
+
+            setisLoading(true);
+
+            if (!OTPFill == null && !OTPFill == "") {
+
                 await api.post("/users/register", { code: OTPFill }).then((doc) => {
 
-                    if (doc.data.msg === "OK") {
-                        setLoader(false);
+                    if (doc.data.msg) {
+                        setisLoading(false);
                         setAlertBox(null);
 
                         setAlertBox(
-                            <FillAlert top="10%" right="10%" heading="Register" info="login again" />
+                            <FillAlert top="10%" right="10%" heading="Registered" />
                         );
+                        hs.push("/login");
 
-
-                        setWork(false);
 
                     }
 
                 }).catch((e) => {
+                    setisLoading(false);
+                    setAlertBox(null);
+                    setAlertBox(
+                        <FillAlert top="10%" right="10%" heading="Invalid OTP" info=" your otp is not valid" />
+                    );
+                });
 
-                })
-
+            } else {
+                setisLoading(false);
+                setAlertBox(null);
+                setAlertBox(
+                    <FillAlert top="10%" right="10%" heading="Input Blank" info="please enter otp" />
+                );
             }
 
-            return (
-                <>
-                    <div>
-                        <FillLabel color="#6A097D" name="Enter OTP" />
-                        <FillInput change={(e) => { setOTPFill(e.target.value) }} name="OTP" value={OTPFill} type="text" pattern="\d{6}" maxLength="6" />
-                    </div>
-
-
-                    <div>
-                        {Loader ? <Loading /> : <FillButton name="submit" margin="20px 0" click={sendOtp} bg="#6A097D" color="#F1D4D4" />}
-
-                        <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
-                    </div>
-                </>
-            );
-
         }
-
-
-        function Done(props) {
-
-            return (
-                <>
-                    <div>
-                        <h1>done</h1>
-                    </div>
-
-                    <div>
-
-                        <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
-
-                    </div>
-
-                </>
-            )
-
-        }
-
 
         return (
 
             <>
-                {work ? <Notdone /> : <Done />}
+
+                <div>
+                    <FillLabel color="#6A097D" name="Enter OTP" />
+                    <FillInput change={(e) => { setOTPFill(e.target.value) }} name="OTP" value={OTPFill} type="text" pattern="\d{6}" maxLength="6" />
+                </div>
+
+
+                <div>
+                    {isLoading ? <Loading /> : <FillButton name="submit" margin="20px 0" click={sendOtp} bg="#6A097D" color="#F1D4D4" />}
+
+                    <FillButtonLink color="#6A097D" click={props.login} name="back to login" />
+                </div>
+
+
             </>
         );
+
+
+
+
+
+
 
     }
 

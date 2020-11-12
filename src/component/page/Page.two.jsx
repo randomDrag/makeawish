@@ -36,7 +36,7 @@ function PageTwo() {
 
     return (
 
-        <section className="min-vh-100 w-100" style={{ backgroundColor: "#6A097D" }}>
+        <section className="min-vh-100 w-100 m-0 p-0" style={{ backgroundColor: "#6A097D" }}>
 
             <div className="d-flex align-items-center justify-content-center w-100 h-100 flex-column">
                 <div className="pageTwo-title">

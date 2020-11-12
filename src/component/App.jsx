@@ -14,12 +14,14 @@ function App() {
 
     <Router>
       <Switch>
+      
         <Route exact path="/" component={Home}/>
         <Route path="/login" component={Login}/>
         <Route path="/FAQ" component={FAQ}/>
-        <Route path="*" component={NotFound}/>
+        
         <PrivateRoute path="/user" component={Dashboard}/>
         <PrivateRoute path="/welcome" component={Welcome}/>
+        <Route path="*" component={NotFound}/>
       </Switch>
     </Router>
     
