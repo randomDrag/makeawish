@@ -221,7 +221,7 @@ function RegisterCard(props) {
 
             setisLoading(true);
 
-            if (!OTPFill == null && !OTPFill == "") {
+            if (!OTPFill == null || !OTPFill == "") {
 
                 await api.post("/users/register", { code: OTPFill }).then((doc) => {
 
