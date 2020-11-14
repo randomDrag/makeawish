@@ -15,10 +15,14 @@ function NavBar(props) {
     const hs = useHistory();
 
     function ButtonClick(props) {
-
+       
         return (
+            <>
             <button className="menu-btn opt" onClick={props.click}>{props.name}</button>
+         
+            </>
         )
+        
     }
 
 
@@ -55,20 +59,22 @@ function NavBar(props) {
 
                             <div>
                                 <li className="nav-item ">
-                                    <div>
+                                    <div className="mob-button-div">
                                     <ButtonClick click={props.login} name={props.loginName} />
                                     </div>
                              
                                 </li>
                                 
                                 <li className="nav-item">
-                                    <div>
-                                    <ButtonClick click={props.register} name={props.registername} />
+                             
+                                    <div className="mob-button-div">
+                                    <ButtonClick click={props.register } name={props.registername} />
                                     </div>
+                                    
                                
                                 </li>
                                 <li className="nav-item">
-                                    <div>
+                                    <div className="mob-button-div">
                                     <ButtonClick click={()=>{hs.push("/FAQ")}} name="FAQ" />
                                     </div>
                                 

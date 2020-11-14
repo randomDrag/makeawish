@@ -137,13 +137,21 @@
   
     .close-btn{
   
-      border: "2px solid red";
+    
       position: absolute;
-  
-      bottom: 10px;
-  
+
+      bottom: 20px;
+
       transition: "all ease-in 2s";
     }
+    .close-btn button{
+  
+    
+    background-color: transparent;
+    border: none;
+    font-size: 3.5rem;
+    }
+  
   
     .fnt-name{
   
@@ -190,6 +198,18 @@ position: fixed;
 background-color: #6A097D;
 
    }
+
+   .mob-button-div{
+     margin: 10px 0;
+     display: flex;
+   
+     justify-content: center;
+     align-items: center;
+
+   }
+
+   
+
 
    @media (max-width: 575.98px) { 
   

@@ -1,21 +1,21 @@
-import React ,{useState }from 'react';
-import { useHistory} from 'react-router-dom';
-import '../../css/admin.css';
-import { api } from '../../utils/api';
+import React ,{useState ,useEffect} from 'react';
+import {  useHistory} from 'react-router-dom';
+import { api } from '../../../utils/api';
+import Add from './Addform.faq';
+import FAQdelete from './FAQ.delete';
+import PepForm from './Pep.form';
 
-import Alogin from './admin/Admin.login.card';
-import Memberlist from './admin/Member.card';
 
-function AdminDB() {
+function MemberDB() {
 
- 
-
+   
  
 const h = useHistory();
 
 const [Cont , setCont]= useState(null);
 
 function logOut(){
+    
     api.get("/admin/logout").then((res=>{
 
         if(res.data.msg === "OK"){
@@ -31,22 +31,25 @@ function logOut(){
 
 function Addproject(){
 
-    let url ="member/AMregister";
+ 
     
 
-    setCont(<Alogin name="ADD" apivalue={`${url}`} history="/" sec="/admindb"/>);
+    setCont(<PepForm/>);
   
 }
 function EditF(){
-   setCont(<Memberlist/>);
+   setCont(<Add/>);
 }
+function faq(){
+    setCont(<FAQdelete/>);
+ }
 
 
     return (
         <>
             <div style={{backgroundColor:"white"}}>
                 <div className="d-flex justify-content-center align-items-center w-100 panel-bar p-0 m-0 ">
-                    <h5 style={{ textAlign: "center", color: "white" }}>Admin panel</h5>
+                    <h5 style={{ textAlign: "center", color: "white" }}>member panel</h5>
                     <button className="logout-btn btn btn-primary" type="button" onClick={logOut}>logout</button>
                 </div>
                 <div className="container-fluid">
@@ -57,13 +60,18 @@ function EditF(){
                                     <li className="nav-item">
                                         <button className="nav-link btn h-btn" onClick={Addproject}>
 
-             ADD Member <span className="sr-only">(current)</span>
+             DOCUMENT <span className="sr-only">(current)</span>
                                         </button>
                                     </li>
 
                                     <li className="nav-item">
                                         <button className="nav-link btn h-btn" onClick={EditF} >
-              Delete and rights <span className="sr-only">(current)</span>
+              FAQ <span className="sr-only">(current)</span>
+                                        </button>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button className="nav-link btn h-btn" onClick={faq} >
+              FAQ DELETE <span className="sr-only">(current)</span>
                                         </button>
                                     </li>
                                 </ul>
@@ -81,5 +89,8 @@ function EditF(){
             </div>
         </>
     );
+
+
 }
-export default AdminDB;
+
+export default MemberDB;

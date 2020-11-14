@@ -1,0 +1,51 @@
+.Formbox-card{
+    margin: 10px 0;
+    border-radius: 7px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    position: relative;
+    background-color: #C060A1;
+
+}
+
+.Formbox-index{
+
+    position: absolute;
+
+    left: 15px;
+
+}
+
+.Formbox-index h5{
+
+    color: #F1D4D4;
+
+}
+
+.Formbox-buttondiv{
+
+    position: absolute;
+    color: #F1D4D4;
+    right: 10px;
+}
+
+.Formbox-buttondiv input{
+    color: white;
+    border: none;
+}
+
+.Formbox-button{
+
+    background-color: transparent;
+    border: none;
+}
+.Formbox-button img{
+
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+   
+}
