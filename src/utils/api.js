@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL : "/",
+    baseURL : "https://makewish-server.herokuapp.com/",
     responseType: "json",
-    // withCredentials: true,
+    withCredentials: true,
 });
 
 
